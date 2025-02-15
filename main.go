@@ -41,7 +41,7 @@ func main() {
 		log.Fatal(err)
 		return
 	}
-	loc, err := time.LoadLocation("Europe/Moscow")
+	loc, err := time.LoadLocation("Asia/Dubai")
 	if err != nil {
 		log.Fatal(err)
 		return
