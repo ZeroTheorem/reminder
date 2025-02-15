@@ -41,6 +41,11 @@ func main() {
 		log.Fatal(err)
 		return
 	}
+	loc, err := time.LoadLocation("Europe/Moscow")
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
 	s := [4]string{"❤️", "💜", "💙", "💚"}
 	ph := [6]string{msg1, msg2, msg3, msg4, msg5, msg6}
 	m := &tele.ReplyMarkup{}
@@ -50,14 +55,14 @@ func main() {
 
 	b.Handle("/start", func(c tele.Context) error {
 		c.Send(startMessage)
-		w := while()
+		w := while(loc)
 		time.Sleep(time.Duration(w))
 		return c.Send("Эй, время мазать ручки! Намазала?", m)
 	})
 	b.Handle(&y, func(c tele.Context) error {
 		c.Send("Твои ручки скажут тебе спасибо, я люблю тебя")
 		c.Send(s[rand.Intn(len(s)-1)])
-		w := while()
+		w := while(loc)
 		time.Sleep(time.Duration(w))
 		return c.Send("Эй, время мазать ручки! Намазала?", m)
 	})
@@ -68,9 +73,9 @@ func main() {
 	b.Start()
 }
 
-func while() int64 {
-	now := time.Now()
-	targetTime := time.Date(now.Year(), now.Month(), now.Day(), 23, 59, 59, 59, now.Location())
+func while(loc *time.Location) int64 {
+	now := time.Now().In(loc)
+	targetTime := time.Date(now.Year(), now.Month(), now.Day(), 23, 59, 59, 59, loc)
 	diff := targetTime.Sub(now).Nanoseconds()
 	return diff
 
