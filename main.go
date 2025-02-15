@@ -42,7 +42,7 @@ func main() {
 		return
 	}
 
-	loc := time.FixedZone("UTC+4", 4*60*60) // 4 часа * 60 минут * 60 секунд
+	loc := time.FixedZone("UTC+3", 3*60*60) // 3 часа * 60 минут * 60 секунд
 
 	s := [4]string{"❤️", "💜", "💙", "💚"}
 	ph := [6]string{msg1, msg2, msg3, msg4, msg5, msg6}
